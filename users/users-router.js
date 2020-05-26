@@ -18,6 +18,22 @@ router.get("/", (req, res) => {
     .catch(err => res.send(err));
 });
 
+router.get("/:id", validateUserId, (req, res) => {
+    Users.findById(req.params.id)
+      .then(user => {
+       
+           res.status(200).json({user, jwt:req.jwt});
+        }
+      )
+      .catch(error => {
+        // log error to database
+        console.log(error);
+        res.status(500).json({
+          error:"The user information could not be retrieved."
+        });
+      });
+  });
+  
 
 
 router.get("/:id/items", (req, res) => {
@@ -99,4 +115,19 @@ router.post('/:id/items', (req, res) => {
     });
   });
 
+
+  function validateUserId(req, res, next) {
+ 
+  
+    Users.findById(req.params.id)
+      .then(user => {
+        if (!user) {
+          res.status(404).json({ message:"invalid user id"});
+      
+        } else {
+           req.user = user;
+           next();
+        }
+      })
+  }
 module.exports = router;
