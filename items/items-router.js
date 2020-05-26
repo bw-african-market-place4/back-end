@@ -5,6 +5,7 @@ const Items = require("./items-model.js");
 
 
 
+
 const { allItemFields } = require("../users/users-service.js");
 
 
@@ -35,10 +36,12 @@ router.get("/", (req, res) => {
   
   router.post('/', (req, res) => {
     const itemData = req.body;
-  
+
+   
     if(allItemFields(itemData)) {
     Items.addItem(itemData)
     .then(item => {
+     
       res.status(201).json({item, jwt: req.jwt});
     })
     .catch (err => {
@@ -52,7 +55,7 @@ router.get("/", (req, res) => {
   });
 
 
-
+  
 
   router.put('/:id', (req, res) => {
     const { id } = req.params;
@@ -102,16 +105,20 @@ router.get("/", (req, res) => {
   
    Items.getById(req.params.id)
     .then(item => {
-      if (!item) {
-        res.status(404).json({ message:"invalid post id"});
+      if (item) {
+        req.item = item;
+        next();
+       
     
       } else {
-         req.item = item;
-         next();
+        res.status(404).json({ message:"invalid item id"});
       }
     })
   }
+
+
   
-  
+ 
+
   
 module.exports = router;

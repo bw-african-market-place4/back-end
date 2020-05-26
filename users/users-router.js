@@ -54,7 +54,7 @@ router.get("/:id/items", (req, res) => {
    });
 
    
-router.post('/:id/items', (req, res) => {
+router.post('/:id/items', validateUserId, (req, res) => {
    const itemData = req.body;
     const user = {...itemData, userId: req.params.id};
     if(allItemFields(itemData)) {
