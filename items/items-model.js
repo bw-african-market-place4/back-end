@@ -16,7 +16,7 @@ function getById(id) {
     return db("items").where({ id }).first();
   }
 
-  
+ 
 function addItem(newItem) {
     return db("items").insert(newItem, "id").then((ids) => {
         return getById(ids[0]);

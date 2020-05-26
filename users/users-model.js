@@ -6,6 +6,7 @@ module.exports = {
   findBy,
   findById,
   getItemsById
+
 };
 
 function find() {
@@ -33,3 +34,4 @@ function findById(id) {
 function getItemsById(id) {
   return db('items').select("id", "name").where({userId: id});
 }
+
