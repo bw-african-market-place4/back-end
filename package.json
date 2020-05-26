@@ -4,7 +4,9 @@
   "description": "Good luck and have fun ♥️",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "server": "nodemon index.js"
+  
   },
   "repository": {
     "type": "git",
